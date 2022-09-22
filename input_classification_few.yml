@@ -1,0 +1,79 @@
+type_of_dataset: "Bounded_artists"
+train_file: "dataset/2022_08_30/train_Bounded_artists.csv"
+test_file: "dataset/2022_08_30/test_Bounded_artists.csv"
+seed: 420
+chains: 2
+cores: 2
+train_configurations:
+  conf1:
+    type: classification
+    priors:
+      - normal(0, 1)
+      - normal(0, 0.1)
+      - normal(0, 10)
+      - student_t(3, 0, 1)
+      - student_t(3, 0, 10)
+    formula: hit ~ danceability
+    formula_str: hit-danceability
+    family: bernoulli
+    link: logit
+  conf2:
+    type: classification
+    priors:
+      - normal(0, 1)
+      - normal(0, 0.1)
+      - normal(0, 10)
+      - student_t(3, 0, 1)
+      - student_t(3, 0, 10)
+    formula: hit ~ artist_total_followers
+    formula_str: hit-followers
+    family: bernoulli
+    link: logit
+  conf7:
+    type: classification
+    priors:
+      - normal(0, 1)
+      - normal(0, 0.1)
+      - normal(0, 10)
+      - student_t(3, 0, 1)
+      - student_t(3, 0, 10)
+    formula: hit ~ energy + acousticness + danceability + instrumentalness + liveness + loudness + speechiness  + valence + tempo + time_signature + duration_ms + key + mode
+    formula_str: hit-all_wo_followers
+    family: bernoulli
+    link: logit
+  conf8:
+    type: classification
+    priors:
+      - normal(0, 1)
+      - normal(0, 0.1)
+      - normal(0, 10)
+      - student_t(3, 0, 1)
+      - student_t(3, 0, 10)
+    formula: hit ~ artist_total_followers + energy + acousticness + danceability + instrumentalness + liveness + loudness + speechiness  + valence + tempo + time_signature + duration_ms + key + mode
+    formula_str: hit-all
+    family: bernoulli
+    link: logit
+  conf9:
+    type: classification
+    priors:
+      - normal(0, 1)
+      - normal(0, 0.1)
+      - normal(0, 10)
+      - student_t(3, 0, 1)
+      - student_t(3, 0, 10)
+    formula: hit ~ artist_total_followers + liveness + time_signature + duration_ms + (1 + energy + acousticness + danceability + instrumentalness + loudness + speechiness + valence + tempo  + mode | key)
+    formula_str: hit-all_many_lvl
+    family: bernoulli
+    link: logit
+  conf10:
+    type: classification
+    priors:
+      - normal(0, 1)
+      - normal(0, 0.1)
+      - normal(0, 10)
+      - student_t(3, 0, 1)
+      - student_t(3, 0, 10)
+    formula: hit ~ artist_total_followers + liveness + time_signature + duration_ms + loudness + speechiness + valence + (1 + energy + acousticness + danceability + instrumentalness + tempo  + mode | key)
+    formula_str: hit-all_all_lvl
+    family: bernoulli
+    link: logit
